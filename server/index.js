@@ -150,6 +150,7 @@ app.post('/api/appointments', async (req, res) => {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
           <div style="background-color: #f8f8f8; padding: 20px; text-align: center;">
+            <img src="cid:kplogo" style="max-width: 150px; height: auto; margin-bottom: 10px;">
             <h1 style="color: #333;">Appointment Confirmation</h1>
           </div>
           <div style="padding: 20px; color: #555;">
@@ -172,6 +173,13 @@ app.post('/api/appointments', async (req, res) => {
           </div>
         </div>
       `,
+      attachments: [
+        {
+          filename: 'kplogo.png',
+          path: 'd:\\Users\\Lenovo\\Documents\\finalkp\\finalkp\\public\\kplogo.png',
+          cid: 'kplogo'
+        }
+      ]
     };
 
     console.log('Attempting to send confirmation email to user...');
