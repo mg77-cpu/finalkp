@@ -5,7 +5,6 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
@@ -14,9 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  
-})
+mongoose.connect(process.env.MONGO_URI, {})
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
@@ -69,58 +66,46 @@ const bookingSchema = new mongoose.Schema({
   }
 });
 
-module.exports = app;
-
-
-
-// API Endpoints
-
-// Placeholder for services
-const services = [
-  { id: '1', name: 'Accounting' },
-  { id: '2', name: 'Taxation' },
-  { id: '3', name: 'Business Advisory' },
-  { id: '4', name: 'Compliance' },
-];
+const Booking = mongoose.model('Booking', bookingSchema);
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  debug: true, // Shows SMTP traffic and messages
-  logger: true // Logs to the console
+  debug: true,
+  logger: true
 });
 
 // Verify Nodemailer transporter
 transporter.verify(function (error, success) {
   if (error) {
     console.error("Nodemailer transporter verification failed:", error);
-    console.error("Verification error details:", error.message);
   } else {
     console.log("Nodemailer transporter is ready to send emails");
-    console.log("Verification success details:", success);
   }
 });
 
 // API Endpoints
 app.get('/api/services', (req, res) => {
+  const services = [
+    { id: '1', name: 'Accounting' },
+    { id: '2', name: 'Taxation' },
+    { id: '3', name: 'Business Advisory' },
+    { id: '4', name: 'Compliance' },
+  ];
   res.json(services);
 });
 
-// GET /api/appointments/available-slots - To fetch available time slots for a specific service on a given date.
-// This is a placeholder and would require more complex logic for real-world availability.
 app.get('/api/appointments/available-slots', (req, res) => {
-  const { serviceId, date } = req.query;
-  // In a real application, you'd query your database for actual available slots
-  // For now, we'll return some dummy data
   const dummySlots = ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM"];
   res.json(dummySlots);
 });
 
-// POST /api/appointments - To create a new appointment booking.
 // POST /api/appointments - To create a new appointment booking.
 app.post('/api/appointments', async (req, res) => {
   try {
@@ -150,14 +135,11 @@ app.post('/api/appointments', async (req, res) => {
 
     console.log('Attempting to send email to admin...');
     
-    // FIX: Use async/await instead of callback
     try {
       const adminInfo = await transporter.sendMail(mailOptions);
       console.log('Email sent to admin successfully:', adminInfo.messageId);
-      console.log('Admin email response:', adminInfo.response);
     } catch (emailError) {
       console.error('Error sending email to admin:', emailError);
-      // Don't throw here - we still want to try sending the user email
     }
 
     // Send confirmation email to user
@@ -194,14 +176,11 @@ app.post('/api/appointments', async (req, res) => {
 
     console.log('Attempting to send confirmation email to user...');
     
-    // FIX: Use async/await instead of callback
     try {
       const userInfo = await transporter.sendMail(userMailOptions);
       console.log('Confirmation email sent to user successfully:', userInfo.messageId);
-      console.log('User email response:', userInfo.response);
     } catch (emailError) {
       console.error('Error sending confirmation email to user:', emailError);
-      // Don't throw here - we still want to return the booking success
     }
 
     res.status(201).json({
@@ -218,3 +197,11 @@ app.post('/api/appointments', async (req, res) => {
     });
   }
 });
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Server is running' });
+});
+
+// Export the Express app as a serverless function
+module.exports = app;
