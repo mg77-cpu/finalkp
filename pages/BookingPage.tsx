@@ -46,7 +46,7 @@ const BookingPage: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get(`${API_BASE_URL}/services`);
-        setServices(response.data);
+        setServices(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch (err) {
         toast.error('Failed to fetch services.');
