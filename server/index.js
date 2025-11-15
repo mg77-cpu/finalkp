@@ -132,11 +132,12 @@ app.post('/api/appointments', async (req, res) => {
       `,
     };
 
+    console.log('Attempting to send email to admin...');
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email to admin:', error);
       } else {
-        console.log('Email sent to admin: ' + info.response);
+        console.log('Email sent to admin:', info);
       }
     });
 
@@ -178,11 +179,12 @@ app.post('/api/appointments', async (req, res) => {
       }]
     };
 
+    console.log('Attempting to send confirmation email to user...');
     transporter.sendMail(userMailOptions, (error, info) => {
       if (error) {
         console.error('Error sending confirmation email to user:', error);
       } else {
-        console.log('Confirmation email sent to user: ' + info.response);
+        console.log('Confirmation email sent to user:', info);
       }
     });
 
