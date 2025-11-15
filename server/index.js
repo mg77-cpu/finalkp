@@ -176,7 +176,7 @@ app.post('/api/appointments', async (req, res) => {
       attachments: [
         {
           filename: 'kplogo.png',
-          path: 'd:\\Users\\Lenovo\\Documents\\finalkp\\finalkp\\public\\kplogo.png',
+          path: '../public/kplogo.png',
           cid: 'kplogo'
         }
       ]
