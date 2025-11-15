@@ -147,8 +147,10 @@ app.post('/api/appointments', async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email to admin:', error);
+        console.error('Admin email error details:', error.message);
       } else {
         console.log('Email sent to admin:', info);
+        console.log('Admin email info details:', info.response);
       }
     });
 
@@ -190,8 +192,10 @@ app.post('/api/appointments', async (req, res) => {
     transporter.sendMail(userMailOptions, (error, info) => {
       if (error) {
         console.error('Error sending confirmation email to user:', error);
+        console.error('User email error details:', error.message);
       } else {
         console.log('Confirmation email sent to user:', info);
+        console.log('User email info details:', info.response);
       }
     });
 
