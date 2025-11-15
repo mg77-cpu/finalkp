@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 const app = express();
 
@@ -176,7 +177,7 @@ app.post('/api/appointments', async (req, res) => {
       attachments: [
         {
           filename: 'kplogo.png',
-          path: '../public/kplogo.png',
+          path: path.join(__dirname, '..', 'public', 'kplogo.png'),
           cid: 'kplogo'
         }
       ]
