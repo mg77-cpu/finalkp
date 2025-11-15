@@ -172,11 +172,7 @@ app.post('/api/appointments', async (req, res) => {
           </div>
         </div>
       `,
-      attachments: [{
-        filename: 'kplogo.png',
-        path: '../public/kplogo.png', // Adjust path as necessary
-        cid: 'kplogo' //same cid value as in the html img src
-      }]
+      
     };
 
     console.log('Attempting to send confirmation email to user...');
