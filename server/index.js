@@ -15,8 +15,7 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
@@ -120,13 +119,15 @@ app.get('/api/appointments/available-slots', (req, res) => {
 });
 
 // POST /api/appointments - To create a new appointment booking.
+// POST /api/appointments - To create a new appointment booking.
 app.post('/api/appointments', async (req, res) => {
   try {
     const newBooking = new Booking(req.body);
     await newBooking.save();
 
-    // Send email to admin
     const { service, date, time, fullName, email, phoneNumber, message } = req.body;
+
+    // Send email to admin
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.ADMIN_EMAIL,
@@ -146,25 +147,25 @@ app.post('/api/appointments', async (req, res) => {
     };
 
     console.log('Attempting to send email to admin...');
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email to admin:', error);
-        console.error('Admin email error details:', error.message);
-      } else {
-        console.log('Email sent to admin:', info);
-        console.log('Admin email info details:', info.response);
-      }
-    });
+    
+    // FIX: Use async/await instead of callback
+    try {
+      const adminInfo = await transporter.sendMail(mailOptions);
+      console.log('Email sent to admin successfully:', adminInfo.messageId);
+      console.log('Admin email response:', adminInfo.response);
+    } catch (emailError) {
+      console.error('Error sending email to admin:', emailError);
+      // Don't throw here - we still want to try sending the user email
+    }
 
     // Send confirmation email to user
     const userMailOptions = {
       from: process.env.EMAIL_USER,
-      to: email, // User's email address
+      to: email,
       subject: 'Appointment Confirmation',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
           <div style="background-color: #f8f8f8; padding: 20px; text-align: center;">
-            <img src="cid:kplogo" alt="Company Logo" style="max-width: 150px; margin-bottom: 10px;">
             <h1 style="color: #333;">Appointment Confirmation</h1>
           </div>
           <div style="padding: 20px; color: #555;">
@@ -180,35 +181,38 @@ app.post('/api/appointments', async (req, res) => {
               <li style="margin-bottom: 8px;"><strong>Message:</strong> ${message || 'N/A'}</li>
             </ul>
             <p>We look forward to seeing you!</p>
-            <p>Best regards,<br>Your Company Name</p>
+            <p>Best regards,<br>KP Accounting & Tax Services</p>
           </div>
           <div style="background-color: #f8f8f8; padding: 15px; text-align: center; font-size: 12px; color: #888;">
-            <p>&copy; ${new Date().getFullYear()} Your Company Name. All rights reserved.</p>
+            <p>&copy; ${new Date().getFullYear()} KP Accounting & Tax Services. All rights reserved.</p>
           </div>
         </div>
       `,
-      
     };
 
     console.log('Attempting to send confirmation email to user...');
-    transporter.sendMail(userMailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending confirmation email to user:', error);
-        console.error('User email error details:', error.message);
-      } else {
-        console.log('Confirmation email sent to user:', info);
-        console.log('User email info details:', info.response);
-      }
-    });
+    
+    // FIX: Use async/await instead of callback
+    try {
+      const userInfo = await transporter.sendMail(userMailOptions);
+      console.log('Confirmation email sent to user successfully:', userInfo.messageId);
+      console.log('User email response:', userInfo.response);
+    } catch (emailError) {
+      console.error('Error sending confirmation email to user:', emailError);
+      // Don't throw here - we still want to return the booking success
+    }
 
-    res.status(201).json(newBooking);
+    res.status(201).json({
+      success: true,
+      booking: newBooking,
+      message: 'Booking created successfully'
+    });
+    
   } catch (error) {
     console.error('Booking error:', error);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ 
+      success: false,
+      message: error.message 
+    });
   }
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
