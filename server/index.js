@@ -91,6 +91,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Verify Nodemailer transporter
+transporter.verify(function (error, success) {
+  if (error) {
+    console.error("Nodemailer transporter verification failed:", error);
+    console.error("Verification error details:", error.message);
+  } else {
+    console.log("Nodemailer transporter is ready to send emails");
+    console.log("Verification success details:", success);
+  }
+});
+
 // API Endpoints
 app.get('/api/services', (req, res) => {
   res.json(services);
