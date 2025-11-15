@@ -1,0 +1,25 @@
+/* index.css */
+
+@font-face {
+  font-family: 'Momo Trust Display';
+  src: url('/MomoTrustDisplay-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Momo Trust Display', sans-serif;
+}
+
+/* Custom styles for react-datepicker */
+.react-datepicker__input-container input.react-datepicker-selected-input {
+  background-color: #f7efff; /* Light purple background */
+  color: #8b5cf6; /* Darker purple text */
+  border-color: #8b5cf6; /* Purple border */
+}
+
+  .react-datepicker-has-selection {
+    background-color: #ede9fe !important; /* Light purple background */
+    color: #0d0c0d !important; /* Darker purple text */
+    border-color: #ede9fe !important; /* Purple border */
+  }

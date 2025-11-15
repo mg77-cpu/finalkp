@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="google-site-verification" content="oEQJ5UJZy2PAGykPSKBDe3dkOWVPemKGiDDeKJfVB5A" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> KP Accounting </title>
+    <link rel="icon" type="image/png" href="/kplogo.png" />
+    <link rel="apple-touch-icon" href="/kplogo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/index.css">
+    <style>
+      .swiper-slide {
+        width: auto !important;
+      }
+      .logos-main {
+         -webkit-mask: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+         mask: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      }
+      .animate-scroll {
+        animation: scroll 40s linear infinite;
+      }
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.prod.website-files.com/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
