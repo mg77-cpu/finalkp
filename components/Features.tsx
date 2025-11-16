@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calculator, Banknote, Briefcase, Scale } from 'lucide-react';
 import SpotlightCard from './SpotlightCard';
+import Magnet from './Magnet'
+
 
 
 const Features: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <section id="services" className="py-12 sm:py-24 bg-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +33,7 @@ const Features: React.FC = () => {
                     </div>
                     <div className="lg:col-span-1">
                         <SpotlightCard spotlightColor="rgba(92, 41, 153, 0.2)">
-                            <div className="bg-[#f0f0f0] rounded-2xl p-8 h-full flex flex-col">
+                            <div className="bg-[#f0f0f0] rounded-2xl p-8 h-80 flex flex-col">
                                 <h3 className="text-3xl font-bold text-gray-900 max-w-sm">
                                     <span className="font-bold">Taxation</span>
                                     <br />
@@ -70,6 +74,22 @@ const Features: React.FC = () => {
                         </SpotlightCard>
                     </div>
                 </div>
+                <div className="text-center mt-12">
+                    
+                    <Magnet 
+                    padding={50} 
+                    disabled={false} 
+                    magnetStrength={10}>
+                                     <a href="/appointments" 
+                                     onClick={() => navigate('/BookingPage.tsx')}
+                                     className="bg-green-500 text-white hover:text-black transition-colors duration-200 px-8 py-3 text-lg font-semibold rounded-md">
+                                     Book an Appointment
+                                      </a>
+                 
+                    </Magnet>
+                </div>
+                
+                
             </div>
         </section>
     )

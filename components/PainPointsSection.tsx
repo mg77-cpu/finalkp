@@ -2,6 +2,8 @@ import React from 'react';
 import { useRef } from 'react';
 import VariableProximity from './VariableProximity';
 import TiltedCard from './TiltedCard';
+import Magnet from './Magnet'
+
 
 const PainPointsSection: React.FC = () => {
   const painPoints = [
@@ -97,18 +99,32 @@ const PainPointsSection: React.FC = () => {
         </div>
         
         <div className="text-center mt-16">
-          <div className="inline-flex items-center justify-center bg-[#5C2999] bg-opacity-10 rounded-2xl px-8 py-6">
+          <div className="inline-flex items-center justify-center bg-green-400 bg-opacity-10 rounded-2xl px-8 py-6">
             <div className="text-center">
               <p className="text-lg font-semibold text-gray-900 mb-2">
                 Ready to solve these accounting challenges?
               </p>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-5">
                 Let's make your business finances simple and stress-free
               </p>
+              <Magnet 
+                    padding={50} 
+                    disabled={false} 
+                    magnetStrength={10}>
+                                     <a href="/appointments" 
+                                     className="bg-green-400 text-white hover:text-black transition-colors duration-200 px-4 py-2 text-lg font-semibold rounded-md">
+                                     Book an Appointment
+                                      </a>
+                 
+                    </Magnet>
             </div>
+            
           </div>
+          
         </div>
+        
       </div>
+      
     </section>
   );
 };

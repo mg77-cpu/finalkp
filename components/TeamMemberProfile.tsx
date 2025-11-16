@@ -106,7 +106,7 @@ const TeamMemberProfile: React.FC = () => {
                 <p className="text-gray-600 mb-4">
                   Get personalized accounting support for your business
                 </p>
-                <a href="#" className="inline-flex items-center justify-center bg-[#5C2999] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#4a217a] transition-colors">
+                <a href="/appointments"  className="inline-flex items-center justify-center bg-[#5C2999] text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-400 hover:text-gray-300 transition-colors">
                   Book a Consultation
                 </a>
               </div>
