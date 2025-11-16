@@ -58,6 +58,7 @@ const BookingPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    window.scrollTo(0, 0); // Scroll to top
     setLoading(true);
     setError(null);
     setSuccess(null);
